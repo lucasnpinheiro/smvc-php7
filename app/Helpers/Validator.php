@@ -612,7 +612,7 @@ class Validator
     // --------------- END [ADD NEW RULE FUNCTIONS ABOVE THIS LINE] ------------
     /**
      * callback
-     * 
+     *
      * @param string $name            
      * @param mixed $function            
      * @param string $message            
@@ -703,7 +703,7 @@ class Validator
 
     /**
      * validate
-     * 
+     *
      * @param string $key            
      * @param string $label            
      * @return bool
@@ -986,7 +986,7 @@ class Validator
     }
 
     /* Additional methods */
-    public function reset():null
+    public function reset(): null
     {
         $this->rules = [];
         $this->filters = [];

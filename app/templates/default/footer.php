@@ -2,12 +2,11 @@
 /**
  * Sample layout
  */
-
 use Helpers\Assets;
 use Helpers\Url;
 use Helpers\Hooks;
 
-//initialise hooks
+// initialise hooks
 $hooks = Hooks::get();
 ?>
 
@@ -16,14 +15,14 @@ $hooks = Hooks::get();
 <!-- JS -->
 <?php
 echo Assets::js(array(
-	Url::getTemplateAssetsPath() . 'js/jquery.js',
-	'//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js'
+    Url::getTemplateAssetsPath() . 'js/jquery.js',
+    '//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js'
 ));
 
-//hook for plugging in javascript
+// hook for plugging in javascript
 $hooks->run('js');
 
-//hook for plugging in code into the footer
+// hook for plugging in code into the footer
 $hooks->run('footer');
 ?>
 

@@ -6,7 +6,6 @@
  * @date May 23 2015
  * @date updated Sept 19, 2015
  */
-
 namespace Helpers;
 
 use Helpers\Session;
@@ -27,12 +26,13 @@ use Helpers\Session;
  *
  * These lines need to be placed in the controller action to validate CSRF token submitted with the form:
  * if (!Csrf::isTokenValid()) {
- *      Url::redirect('admin/login'); // or wherever you want to redirect to.
- *    }
+ * Url::redirect('admin/login'); // or wherever you want to redirect to.
+ * }
  * And that's all
  */
 class Csrf
 {
+
     /**
      * get CSRF token and generate a new one if expired
      *
@@ -42,15 +42,15 @@ class Csrf
      */
     public static function makeToken(): string
     {
-        $max_time    = 60 * 60 * 24; // token is valid for 1 day
+        $max_time = 60 * 60 * 24; // token is valid for 1 day
         $csrf_token = Session::get('csrf_token');
-        $stored_time  = Session::get('csrf_token_time');
-
+        $stored_time = Session::get('csrf_token_time');
+        
         if ($max_time + $stored_time <= time() || empty($csrf_token)) {
             Session::set('csrf_token', md5(uniqid(rand(), true)));
             Session::set('csrf_token_time', time());
         }
-
+        
         return Session::get('csrf_token');
     }
 

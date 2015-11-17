@@ -2,7 +2,6 @@
 /**
  * Sample layout
  */
-
 use Core\Locale;
 
 ?>

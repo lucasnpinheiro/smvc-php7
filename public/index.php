@@ -32,7 +32,6 @@ if (! is_dir($smvc) and is_dir(ROOT . $smvc)) {
  */
 define('SMVC', realpath($smvc) . DIRECTORY_SEPARATOR);
 
-
 /**
  * Unset non used variables
  */

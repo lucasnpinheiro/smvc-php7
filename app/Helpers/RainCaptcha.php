@@ -1,12 +1,11 @@
 <?php
 /**
-** RainCaptcha PHP Wrapper v1.1.0
-**
-** Documentation: http://raincaptcha.driversworld.us/pages/docs_php_wrapper
-** http://raincaptcha.driversworld.us/
-** This code is in the public domain.
-*/
-
+ ** RainCaptcha PHP Wrapper v1.1.0
+ **
+ ** Documentation: http://raincaptcha.driversworld.us/pages/docs_php_wrapper
+ ** http://raincaptcha.driversworld.us/
+ ** This code is in the public domain.
+ */
 namespace Helpers;
 
 /**
@@ -14,6 +13,7 @@ namespace Helpers;
  */
 class RainCaptcha
 {
+
     /**
      * Constant holding the API url.
      */
@@ -29,7 +29,8 @@ class RainCaptcha
     /**
      * When class is called sessionId is stored or server settings are used for reference.
      *
-     * @param string $sessionId instance id
+     * @param string $sessionId
+     *            instance id
      */
     public function __construct($sessionId = null)
     {
@@ -53,7 +54,7 @@ class RainCaptcha
     /**
      * Compare given answer against the generated session.
      *
-     * @param  string $answer
+     * @param string $answer            
      * @return boolean
      */
     public function checkAnswer($answer)
@@ -61,7 +62,7 @@ class RainCaptcha
         if (empty($answer)) {
             return false;
         }
-        $response = file_get_contents(self::HOST . '/check/' . $this->sessionId. '/' . $answer);
+        $response = file_get_contents(self::HOST . '/check/' . $this->sessionId . '/' . $answer);
         if ($response === false) {
             return true;
         }

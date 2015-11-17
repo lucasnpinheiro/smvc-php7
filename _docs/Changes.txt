@@ -11,6 +11,9 @@ File Movements
 9. Removed Helpers/Data.php. They are just OOPs wrapper around simple functions, which can be called directly. 
 10. Added Helpers/Validator.php, Helpers/Utilities.php, Helpers/Watchlist.php
 11. Removed errorlog.html from root. Created storage/logs. From Logger.php, dynamic files will be created with date in the name.
+12. Removed Helpers/Password.php. password_* functions are available in PHP and wrapper is redundant.
+13. Renamed Helpers/Date.php to Helpers/Calendar.php
+14. Renamed Helpers\Document to Helpers\File. Added more functions
 
 Code changes
 ---------------------------

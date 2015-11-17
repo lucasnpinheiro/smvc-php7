@@ -6,7 +6,6 @@
  * @version 2.2
  * @date updated Sept 19, 2015
  */
-
 namespace Helpers;
 
 /**
@@ -14,8 +13,10 @@ namespace Helpers;
  */
 class Hooks
 {
+
     /**
      * Array of plugins.
+     * 
      * @var array
      */
     private static $plugins = array();
@@ -37,7 +38,7 @@ class Hooks
     /**
      * Initial hooks.
      *
-     * @param  integer $id
+     * @param integer $id            
      *
      * @return $instance
      */
@@ -47,8 +48,8 @@ class Hooks
         if (isset(self::$instances[$id])) {
             return self::$instances[$id];
         }
-
-        //define hooks
+        
+        // define hooks
         self::setHooks(array(
             'meta',
             'css',
@@ -57,19 +58,19 @@ class Hooks
             'js',
             'routes'
         ));
-
-        //load modules
-        self::loadPlugins(SMVC.'app/Modules/');
+        
+        // load modules
+        self::loadPlugins(SMVC . 'app/Modules/');
         $instance = new self();
         self::$instances[$id] = $instance;
         return $instance;
-
     }
 
     /**
      * Adds hook to hook list.
      *
-     * @param string $where Hook to add.
+     * @param string $where
+     *            Hook to add.
      */
     public static function setHook($where)
     {
@@ -79,7 +80,8 @@ class Hooks
     /**
      * Add multiple hooks.
      *
-     * @param array $where array of hooks to add.
+     * @param array $where
+     *            array of hooks to add.
      */
     public static function setHooks($where)
     {
@@ -93,20 +95,21 @@ class Hooks
      *
      * Only load modulename.module.php files
      *
-     * @param  string $fromFolder path to the folder.
+     * @param string $fromFolder
+     *            path to the folder.
      */
     public static function loadPlugins($fromFolder)
     {
         if ($handle = opendir($fromFolder)) {
             while ($file = readdir($handle)) {
-                if (is_file($fromFolder.$file)) {
-                    //only load modulename.module.php file
-                    if(preg_match('@module.php@', $file)) {
+                if (is_file($fromFolder . $file)) {
+                    // only load modulename.module.php file
+                    if (preg_match('@module.php@', $file)) {
                         require_once $fromFolder . $file;
                     }
-                    self::$plugins [$file] ['file'] = $file;
-                } elseif ((is_dir($fromFolder.$file)) && ($file != '.') && ($file != '..')) {
-                    self::loadPlugins($fromFolder.$file.'/');
+                    self::$plugins[$file]['file'] = $file;
+                } elseif ((is_dir($fromFolder . $file)) && ($file != '.') && ($file != '..')) {
+                    self::loadPlugins($fromFolder . $file . '/');
                 }
             }
             closedir($handle);
@@ -116,27 +119,30 @@ class Hooks
     /**
      * Attach custom function to hook.
      *
-     * @param string $where hook to use
-     * @param string $function function to attach to hook
+     * @param string $where
+     *            hook to use
+     * @param string $function
+     *            function to attach to hook
      */
     public static function addHook($where, $function)
     {
-        if (!isset(self::$hooks[$where])) {
+        if (! isset(self::$hooks[$where])) {
             die("There is no such place ($where) for hooks.");
         } else {
             $theseHooks = explode('|', self::$hooks[$where]);
             $theseHooks[] = $function;
             self::$hooks[$where] = implode('|', $theseHooks);
-
         }
     }
 
     /**
      * Run all hooks attached to the hook.
      *
-     * @param  string $where Hook to execute
-     * @param  string $args option arguments
-     *
+     * @param string $where
+     *            Hook to execute
+     * @param string $args
+     *            option arguments
+     *            
      * @return object - returns the called function
      */
     public function run($where, $args = '')
@@ -144,28 +150,30 @@ class Hooks
         if (isset(self::$hooks[$where])) {
             $theseHooks = explode('|', self::$hooks[$where]);
             $result = $args;
-
+            
             foreach ($theseHooks as $hook) {
                 if (preg_match("/@/i", $hook)) {
-                    //grab all parts based on a / separator
+                    // grab all parts based on a / separator
                     $parts = explode('/', $hook);
-
-                    //collect the last index of the array
+                    
+                    // collect the last index of the array
                     $last = end($parts);
-
-                    //grab the controller name and method call
+                    
+                    // grab the controller name and method call
                     $segments = explode('@', $last);
-
+                    
                     $classname = new $segments[0]();
-                    $result = call_user_func(array($classname, $segments[1]), $result);
-
+                    $result = call_user_func(array(
+                        $classname,
+                        $segments[1]
+                    ), $result);
                 } else {
                     if (function_exists($hook)) {
                         $result = call_user_func($hook, $result);
                     }
                 }
             }
-
+            
             return $result;
         } else {
             die("There is no such place ($where) for hooks.");
@@ -175,14 +183,16 @@ class Hooks
     /**
      * Execute hooks attached to run and collect instead of running
      *
-     * @param  string $where hook
-     * @param  string $args optional arguments
+     * @param string $where
+     *            hook
+     * @param string $args
+     *            optional arguments
      * @return object - returns output of hook call
      */
     public function collectHook($where, $args = null)
     {
         ob_start();
-            echo $this->run($where, $args);
+        echo $this->run($where, $args);
         return ob_get_clean();
     }
 }

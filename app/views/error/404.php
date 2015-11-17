@@ -2,7 +2,6 @@
 /**
  * Sample layout
  */
-
 use Core\Error;
 
 ?>
@@ -21,8 +20,8 @@ use Core\Error;
 			<h3>Troubleshooting</h3>
 
 			<ul>
-			  <li>If you spelled the URL manually, double check the spelling</li>
-			  <li>Go to our website's home page, and navigate to the content in question</li>
+				<li>If you spelled the URL manually, double check the spelling</li>
+				<li>Go to our website's home page, and navigate to the content in question</li>
 			</ul>
 
 		</div>

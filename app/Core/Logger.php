@@ -162,7 +162,7 @@ class Logger
     {
         $date = date('M d, Y G:iA');
         $logMessage = "<p>Error on $date - $error</p>";
-
+        
         $errorFile = self::getCurrentErrorLog();
         
         if (is_file($errorFile) === false) {
@@ -181,7 +181,6 @@ class Logger
             $content = file_get_contents($errorFile);
             file_put_contents($errorFile, $logMessage . $content);
         }
-        
         
         if (self::$printError == true) {
             echo $logMessage;

@@ -7,7 +7,6 @@
  * @date June 27, 2014
  * @date updated Sept 19, 2015
  */
-
 namespace Core;
 
 use Core\Database;
@@ -17,6 +16,7 @@ use Core\Database;
  */
 abstract class Model
 {
+
     /**
      * Hold the database connection.
      *
@@ -29,7 +29,9 @@ abstract class Model
      */
     public function __construct()
     {
-        /** connect to PDO here. */
+        /**
+         * connect to PDO here.
+         */
         $this->db = Database::get();
     }
 }

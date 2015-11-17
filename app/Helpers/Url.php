@@ -136,12 +136,11 @@ class Url
     {
         return explode('/', $_SERVER['REQUEST_URI']);
     }
-    
 
     /**
      * Created the address to the theme folder in public/
      *
-     * @param boolean $custom
+     * @param boolean $custom            
      * @return string url to template folder
      */
     public static function getTemplateAssetsPath($custom = false)

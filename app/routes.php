@@ -10,8 +10,7 @@
 /**
  * Create alias for Router.
  */
-use Core\Router;
-use Helpers\Hooks;
+use Core\Router, Helpers\Hooks;
 
 /**
  * Define routes.

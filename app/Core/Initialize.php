@@ -8,13 +8,13 @@ class Initialize
 
     public function __construct()
     {
-		
-		/**
-		 * check the configuration file presence
-		 */
-		if (! is_readable(SMVC . 'app/config.php')) {
-			die('No Config.php found, configure and rename config.example.php to config.php in app/.');
-		}
+        
+        /**
+         * check the configuration file presence
+         */
+        if (! is_readable(SMVC . 'app/config.php')) {
+            die('No Config.php found, configure and rename config.example.php to config.php in app/.');
+        }
         
         /**
          * Turn on output buffering.
@@ -29,8 +29,8 @@ class Initialize
         /**
          * Turn on custom error handling.
          */
-        //set_exception_handler('Core\Logger::ExceptionHandler');
-        //set_error_handler('Core\Logger::ErrorHandler');
+        // set_exception_handler('Core\Logger::ExceptionHandler');
+        // set_error_handler('Core\Logger::ErrorHandler');
         
         /**
          * Start sessions.

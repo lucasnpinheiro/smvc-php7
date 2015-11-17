@@ -1,21 +1,22 @@
 <?php
-
 namespace Helpers;
 
 /*
-  class to get input data from _REQUEST and _POST
+ * class to get input data from _REQUEST and _POST
  */
+class Request
+{
 
-class Request {
-
-    public static function get($paramName, $escapeHtml = true, $allowBasicFormatTags = false) {
+    public static function get($paramName, $escapeHtml = true, $allowBasicFormatTags = false)
+    {
         return \Helpers\Utilities::escapeString($_GET[$paramName], $escapeHtml, $allowBasicFormatTags);
     }
 
-    public static function post($paramName, $escapeHtml = true, $allowBasicFormatTags = false) {
+    public static function post($paramName, $escapeHtml = true, $allowBasicFormatTags = false)
+    {
         if (is_array($paramName)) {
             $postArray = array();
-            for ($i = 0; $i < count($paramName); $i++) {
+            for ($i = 0; $i < count($paramName); $i ++) {
                 $key = $aliasFields[$i] != '' ? $aliasFields[$i] : $paramName[$i];
                 if ($escapeHtml) {
                     $postArray[$key] = \Helpers\Utilities::escapeString($_POST[$paramName[$i]], $escapeHtml, $allowBasicFormatTags);
@@ -41,9 +42,10 @@ class Request {
         }
     }
 
-    public static function getPostParams($postFields, $aliasFields = null, $escapeHtml = true, $allowBasicFormatTags = false) {
+    public static function getPostParams($postFields, $aliasFields = null, $escapeHtml = true, $allowBasicFormatTags = false)
+    {
         $postArray = array();
-        for ($i = 0; $i < count($postFields); $i++) {
+        for ($i = 0; $i < count($postFields); $i ++) {
             $key = $aliasFields[$i] != '' ? $aliasFields[$i] : $postFields[$i];
             if ($escapeHtml) {
                 $postArray[$key] = \Helpers\Utilities::escapeString($_POST[$postFields[$i]], $escapeHtml, $allowBasicFormatTags);
@@ -54,28 +56,49 @@ class Request {
         return $postArray;
     }
 
-    public static function files($fieldNames, $getMetaData = false) {
-
-//validations
+    public static function files($fieldNames, $getMetaData = false)
+    {
+        
+        // validations
         if (empty($_FILES[$fieldNames])) {
             return false;
-        } else if ($_FILES[$fieldNames]['name'] == '' || $_FILES[$fieldNames]['tmp_name'] == '') {
-            return ['error' => 'Invalid upload'];
-        } else if (!is_uploaded_file($_FILES[$fieldNames]['tmp_name'])) {
-            return false;
-        } else if ($_FILES[$fieldNames]['error'] != '') {
-            return ['error' => $_FILES[$fieldNames]['error']];
-        } else if ($_FILES[$fieldNames]['size'] > UPLOAD_MAX_FILESIZE) { //from app_config.php
-            return ['error' => 'File size exceeds maximum allowed size of 50MB'];
-        } else if (\Helpers\Utilities::strposArray($_FILES[$fieldNames]['name'], ["/", "\\", '..', '"', "'",]) !== FALSE) {
-            return ['error' => 'File name contains invalid characters'];
-        } else {
-//validations ok, so return data
-            return $_FILES[$fieldNames];
-        }
+        } else 
+            if ($_FILES[$fieldNames]['name'] == '' || $_FILES[$fieldNames]['tmp_name'] == '') {
+                return [
+                    'error' => 'Invalid upload'
+                ];
+            } else 
+                if (! is_uploaded_file($_FILES[$fieldNames]['tmp_name'])) {
+                    return false;
+                } else 
+                    if ($_FILES[$fieldNames]['error'] != '') {
+                        return [
+                            'error' => $_FILES[$fieldNames]['error']
+                        ];
+                    } else 
+                        if ($_FILES[$fieldNames]['size'] > UPLOAD_MAX_FILESIZE) { // from app_config.php
+                            return [
+                                'error' => 'File size exceeds maximum allowed size of 50MB'
+                            ];
+                        } else 
+                            if (\Helpers\Utilities::strposArray($_FILES[$fieldNames]['name'], [
+                                "/",
+                                "\\",
+                                '..',
+                                '"',
+                                "'"
+                            ]) !== FALSE) {
+                                return [
+                                    'error' => 'File name contains invalid characters'
+                                ];
+                            } else {
+                                // validations ok, so return data
+                                return $_FILES[$fieldNames];
+                            }
     }
 
-    public static function cookie($paramName, $escapeHtml = true, $allowBasicFormatTags = false) {
+    public static function cookie($paramName, $escapeHtml = true, $allowBasicFormatTags = false)
+    {
         return \Helpers\Utilities::escapeString($_COOKIE[$paramName], $escapeHtml, $allowBasicFormatTags);
     }
 
@@ -85,8 +108,9 @@ class Request {
      * @static static method
      * @return boolean
      */
-    public static function isAjax() {
-        if (!empty($_SERVER['HTTP_X_REQUESTED_WITH'])) {
+    public static function isAjax()
+    {
+        if (! empty($_SERVER['HTTP_X_REQUESTED_WITH'])) {
             return strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
         }
         return false;
@@ -98,7 +122,8 @@ class Request {
      * @static static method
      * @return boolean
      */
-    public static function isPost() {
+    public static function isPost()
+    {
         return $_SERVER["REQUEST_METHOD"] === "POST";
     }
 
@@ -108,8 +133,8 @@ class Request {
      * @static static method
      * @return boolean
      */
-    public static function isGet() {
+    public static function isGet()
+    {
         return $_SERVER["REQUEST_METHOD"] === "GET";
     }
-
 }
