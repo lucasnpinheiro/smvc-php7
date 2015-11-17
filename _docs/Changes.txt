@@ -1,0 +1,27 @@
+File Movements
+---------------------------
+1. Moved \Helpers\Database() into \Core\Database()
+2. Removed \Helpers\page_eloq.md
+3. Moved Core/Config.php to Core/. Renamed Config.php to config.php
+4. Moved Core/routes.php to Core/
+5. Created Core\Initialize.php
+6. Renamed Language/ to Locale/, Core\Language to Core\Locale
+7. Renamed Helpers/Arr.php to Helpers/Arrays.php
+8. Removed Helpers/phpMailer. It is available from packagist.
+9. Removed Helpers/Data.php. They are just OOPs wrapper around simple functions, which can be called directly. 
+10. Added Helpers/Validator.php, Helpers/Utilities.php, Helpers/Watchlist.php
+11. Removed errorlog.html from root. Created storage/logs. From Logger.php, dynamic files will be created with date in the name.
+
+Code changes
+---------------------------
+* included \Core\Initialize() in index.php and moved the config call into initialize. 
+* In Helpers/Assets, resource() would return string, instead of echo. useful when preparing html dynamically.
+* Removed Url:: getSegment(), lastSegment(), firstSegment(). These can be extracted from segments();  
+*  \Helpers\Url::templatePath(), relativeTemplatePath() renamed to getTemplatePath(), getRelativeTemplatePath()
+
+
+TODO
+---------------------------
+- replace string functions with multibyte ones
+- remove phpmailer reference from Helpers/Logger.php
+- type hinting for all function/method parameters
