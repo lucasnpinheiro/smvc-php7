@@ -16,7 +16,7 @@ class Hooks
 
     /**
      * Array of plugins.
-     * 
+     *
      * @var array
      */
     private static $plugins = array();

@@ -50,5 +50,4 @@ class Welcome extends Controller
         View::render('welcome/subpage', $data);
         View::renderTemplate('footer', $data);
     }
-    
 }

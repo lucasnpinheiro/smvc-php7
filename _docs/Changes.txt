@@ -1,10 +1,10 @@
-File Movements
+Architecture changes
 ---------------------------
-1. Moved \Helpers\Database() into \Core\Database()
+1. Moved \Helpers\Database() into \Core\Database(). Its common and important. 
 2. Removed \Helpers\page_eloq.md
 3. Moved Core/Config.php to Core/. Renamed Config.php to config.php
-4. Moved Core/routes.php to Core/
-5. Created Core\Initialize.php
+4. Moved Core/routes.php to Core/. 
+5. Created Core\Initialize.php. This class will serve for any future pre-initializations
 6. Renamed Language/ to Locale/, Core\Language to Core\Locale
 7. Renamed Helpers/Arr.php to Helpers/Arrays.php
 8. Removed Helpers/phpMailer. It is available from packagist.
@@ -25,6 +25,7 @@ Code changes
 
 TODO
 ---------------------------
+- Array input for routes
 - replace string functions with multibyte ones
 - remove phpmailer reference from Helpers/Logger.php
 - type hinting for all function/method parameters

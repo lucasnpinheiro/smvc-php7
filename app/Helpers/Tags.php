@@ -60,7 +60,7 @@ class Tags
         $string = str_replace('[year]', date('Y'), $string);
         
         // name of website
-        $string = str_replace('[sitetitle]', SITETITLE, $string);
+        $string = str_replace('[sitetitle]', SITE_TITLE, $string);
         
         // site email address
         $string = str_replace('[siteemail]', SITEEMAIL, $string);

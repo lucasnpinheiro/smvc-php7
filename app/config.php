@@ -87,7 +87,7 @@ define('DB_NAME', 'dbname');
 /**
  * Database username.
  */
-define('DB_USER', 'root');
+define('DB_USER', 'non_root_user');
 
 /**
  * Database password.
@@ -97,7 +97,7 @@ define('DB_PASS', 'password');
 /**
  * PREFER to be used in database calls default is smvc_
  */
-define('PREFIX', 'smvc_');
+define('DB_TABLE_PREFIX', 'smvc_');
 
 /**
  * Set prefix for sessions.
@@ -107,7 +107,7 @@ define('SESSION_PREFIX', 'smvc_');
 /**
  * Optional create a constant for the name of the site.
  */
-define('SITETITLE', 'SMVC-PHP7');
+define('SITE_TITLE', 'SMVC-PHP7');
 
 /**
  * Optionall set a site email address.

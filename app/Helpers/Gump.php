@@ -22,7 +22,7 @@ class GUMP
      * @var array $validation_rules
      */
     protected $validation_rules = array();
- 
+
     /**
      * Filter rules for execution
      *
@@ -62,14 +62,14 @@ class GUMP
     
     /**
      * Basic tags
-     * 
+     *
      * @var string $basic_tags
      */
     public static $basic_tags = "<br><p><a><strong><b><i><em><img><blockquote><code><dd><dl><hr><h1><h2><h3><h4><h5><h6><label><ul><li><span><sub><sup>";
 
     /**
      * Noise Words
-     * 
+     *
      * @var string $en_noise_words
      */
     public static $en_noise_words = "about,after,all,also,an,and,another,any,are,as,at,be,because,been,before,

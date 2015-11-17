@@ -453,9 +453,11 @@ class Calendar
                 if (($day_counter + 1) != $days_in_month) :
                     $calendar .= '<tr class="HelpersCalendarRow">';
                 
+                
                 endif;
                 $running_day = - 1;
                 $days_in_this_week = 0;
+            
             
             endif;
             $days_in_this_week ++;
@@ -470,6 +472,7 @@ class Calendar
                 $calendar .= '<td class="calendar-day-np"> </td>';
             endfor
             ;
+        
         
         endif;
         

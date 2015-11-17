@@ -10,13 +10,13 @@ class Datagrid
     protected $getHtml, $noDataMessage;
 
     public $source;
- // source for this array
+    // source for this array
     protected $colWidths;
- // array of widths for each cols
+    // array of widths for each cols
     protected $colMapping;
- // array of columns whose content needs to be hyperlinked.
+    // array of columns whose content needs to be hyperlinked.
     protected $stripSlashes;
- // strip slashes in cell data displayed
+    // strip slashes in cell data displayed
     protected $style, $headerStyle, $trClass, $tdClass;
 
     protected $width, $border, $padding, $spacing, $borderColor;

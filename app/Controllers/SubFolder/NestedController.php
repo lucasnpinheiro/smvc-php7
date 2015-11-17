@@ -1,5 +1,4 @@
 <?php
-
 namespace Controllers\SubFolder;
 
 use Core\View;
@@ -30,6 +29,4 @@ class NestedController extends Controller
         
         View::renderDefault('welcome/welcome', $data);
     }
-
-    
 }
