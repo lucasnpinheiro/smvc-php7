@@ -1,5 +1,5 @@
 <?php
-namespace Controllers\SubFolder;
+namespace Controllers\Subfolder;
 
 use Core\View;
 use Core\Controller;
@@ -7,7 +7,7 @@ use Core\Controller;
 /**
  * Sample controller showing a construct and 2 methods and their typical usage.
  */
-class NestedController extends Controller
+class Nested extends Controller
 {
 
     /**

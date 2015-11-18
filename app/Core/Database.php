@@ -133,7 +133,7 @@ class Database extends PDO
         $fieldNames = implode(',', array_keys($data));
         $fieldValues = ':' . implode(', :', array_keys($data));
         
-        $stmt = $this->prepare("INSERT INTO $table ($fieldNames) VALUES ($fieldValues)");
+        $stmt = $this->prepare("INSERT INTO " . DB_TABLE_PREFIX . ".$table ($fieldNames) VALUES ($fieldValues)");
         
         foreach ($data as $key => $value) {
             $stmt->bindValue(":$key", $value);
@@ -175,7 +175,7 @@ class Database extends PDO
         }
         $whereDetails = ltrim($whereDetails, ' AND ');
         
-        $stmt = $this->prepare("UPDATE $table SET $fieldDetails WHERE $whereDetails");
+        $stmt = $this->prepare("UPDATE " . DB_TABLE_PREFIX . ".$table SET $fieldDetails WHERE $whereDetails");
         
         foreach ($data as $key => $value) {
             $stmt->bindValue(":field_$key", $value);
@@ -220,7 +220,7 @@ class Database extends PDO
             $uselimit = "LIMIT $limit";
         }
         
-        $stmt = $this->prepare("DELETE FROM $table WHERE $whereDetails $uselimit");
+        $stmt = $this->prepare("DELETE FROM " . DB_TABLE_PREFIX . ".$table WHERE $whereDetails $uselimit");
         
         foreach ($where as $key => $value) {
             $stmt->bindValue(":$key", $value);
@@ -238,13 +238,13 @@ class Database extends PDO
      */
     public function truncate($table)
     {
-        return $this->exec("TRUNCATE TABLE $table");
+        return $this->exec("TRUNCATE TABLE " . DB_TABLE_PREFIX . ".$table");
     }
 
     /**
      * execute sql query and fetch result automatically
      */
-    public function sqlQuery($sqlQuery, $paramsArray = [])
+    public function sql($sqlQuery, $paramsArray = [], $extractResult = false)
     {
         $this->result = new \Helpers\Datasource();
         \Helpers\Watchlist::add($sqlQuery . '<br />Params: ' . print_r($paramsArray, true), 'Query @ ' . microtime() . ': ');
@@ -274,15 +274,44 @@ class Database extends PDO
             $sqlType = $this->result->getSQLType($this->sql);
             
             // whether to extrack result or not
-            if (in_array($sqlType, array(
+            if (in_array($sqlType, [
                 'show',
                 'select',
                 'exec'
-            ))) {
-                $this->expectResult = true;
-            } else {
-                $this->expectResult = false;
+            ])) {
+                $extractResult = true;
             }
+            
+            // if there is result, extract it
+            if (true == $extractResult) {
+                // get the data
+                while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
+                    $rowValues = array();
+                    foreach ($row as $key => $value) {
+                        if ($indexRows) {
+                            $rowValues[$key] = $value;
+                        } else {
+                            $rowValues[] = $value;
+                        }
+                    }
+                    $this->result->rows[] = $rowValues;
+                }
+            } else {
+                
+                // whether affected rows comes or not
+                if (in_array($sqlType, [
+                    'insert',
+                    'delete',
+                    'update',
+                    'truncate',
+                    'use'
+                ])) {
+                    $this->result->affectedRows = $statement->rowCount();
+                    if ($this->_sqlType == 'insert') // get last insert if for insert statements
+                        $this->result->lastInsertId = $this->lastInsertId();
+                }
+            }
+            $this->result->prepare();
             
             $status = true;
         }

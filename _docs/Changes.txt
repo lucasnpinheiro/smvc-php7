@@ -4,7 +4,7 @@ Architecture changes
 2. Removed \Helpers\page_eloq.md
 3. Moved Core/Config.php to Core/. Renamed Config.php to config.php
 4. Moved Core/routes.php to Core/. 
-5. Created Core\Initialize.php. This class will serve for any future pre-initializations
+5. Added Core\Initialize.php. This class will serve for any future pre-initializations
 6. Renamed Language/ to Locale/, Core\Language to Core\Locale
 7. Renamed Helpers/Arr.php to Helpers/Arrays.php
 8. Removed Helpers/phpMailer. It is available from packagist.
@@ -14,6 +14,8 @@ Architecture changes
 12. Removed Helpers/Password.php. password_* functions are available in PHP and wrapper is redundant.
 13. Renamed Helpers/Date.php to Helpers/Calendar.php
 14. Renamed Helpers\Document to Helpers\File. Added more functions
+15. Added Helpers\Datasource.php Extracted datasource can be of this type. 
+16. Added Core\Entity.php with basic functions. 
 
 Code changes
 ---------------------------
@@ -21,6 +23,9 @@ Code changes
 * In Helpers/Assets, resource() would return string, instead of echo. useful when preparing html dynamically.
 * Removed Url:: getSegment(), lastSegment(), firstSegment(). These can be extracted from segments();  
 *  \Helpers\Url::templatePath(), relativeTemplatePath() renamed to getTemplatePath(), getRelativeTemplatePath()
+* In Core\Router.php, added sub folder level to autoDispatch(). This will check for one more folder beneath controllers.
+	 Those controllers which can not go into modules but need a subfolder will be accessible with this fix.  
+* In Core\Database.php, added sql method. This will automatically extract result of select, show, exec. 
 
 
 TODO

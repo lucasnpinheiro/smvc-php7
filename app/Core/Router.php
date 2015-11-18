@@ -151,20 +151,32 @@ class Router
         $parts = explode('/', $uri);
         
         $controller = array_shift($parts);
-        $controller = $controller ? $controller : DEFAULT_CONTROLLER;
+        $controller = $controller ?? DEFAULT_CONTROLLER;
         $controller = ucwords($controller);
         
+        // Check for file in top Controllers folder
+        if (file_exists(SMVC . "app/Controllers/$controller.php")) {
+            $controller = "\Controllers\\$controller";
+        } else {
+            
+            // check in sub folder beneath Contollers folder
+            $subFolderName = $controller;
+            
+            $controller = array_shift($parts);
+            $controller = $controller ?? DEFAULT_CONTROLLER;
+            $controller = ucwords($controller);
+            
+            if (file_exists(SMVC . "app/Controllers/$subFolderName/$controller.php")) {
+                $controller = "\Controllers\\$subFolderName\\$controller";
+            } else
+                return false;
+        }
+        
         $method = array_shift($parts);
-        $method = $method ? $method : DEFAULT_METHOD;
+        $method = $method ?? DEFAULT_METHOD;
         
         $args = ! empty($parts) ? $parts : array();
         
-        // Check for file
-        if (! file_exists("app/Controllers/$controller.php")) {
-            return false;
-        }
-        
-        $controller = "\Controllers\\$controller";
         $c = new $controller();
         
         if (method_exists($c, $method)) {
