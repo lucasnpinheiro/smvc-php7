@@ -34,22 +34,22 @@ define('ENVIRONMENT', 'development');
  */
 
 if (defined('ENVIRONMENT')) {
-    switch (ENVIRONMENT) {
-        case 'development':
-            error_reporting(E_ALL);
-            break;
-        case 'production':
-            error_reporting(0);
-            break;
-        default:
-            exit('The application environment is not set correctly.');
-    }
+	switch (ENVIRONMENT) {
+		case 'development' :
+			error_reporting(E_ALL);
+			break;
+		case 'production' :
+			error_reporting(0);
+			break;
+		default :
+			exit('The application environment is not set correctly.');
+	}
 }
 
 /**
  * Define relative base path.
  */
-define('DIR', '/smvc-php7/public/');
+define('DIR', '/smvc');
 
 /**
  * Set default controller and method for legacy calls.

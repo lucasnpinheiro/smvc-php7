@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Cross Site Request Forgery helper
  *
@@ -30,39 +31,36 @@ use Helpers\Session;
  * }
  * And that's all
  */
-class Csrf
-{
+class Csrf {
 
-    /**
-     * get CSRF token and generate a new one if expired
-     *
-     * @access public
-     * @static static method
-     * @return string
-     */
-    public static function makeToken(): string
-    {
-        $max_time = 60 * 60 * 24; // token is valid for 1 day
-        $csrf_token = Session::get('csrf_token');
-        $stored_time = Session::get('csrf_token_time');
-        
-        if ($max_time + $stored_time <= time() || empty($csrf_token)) {
-            Session::set('csrf_token', md5(uniqid(rand(), true)));
-            Session::set('csrf_token_time', time());
-        }
-        
-        return Session::get('csrf_token');
-    }
+	/**
+	 * get CSRF token and generate a new one if expired
+	 *
+	 * @access public
+	 * @static static method
+	 * @return string
+	 */
+	public static function makeToken() {
+		$max_time = 60 * 60 * 24; // token is valid for 1 day
+		$csrf_token = Session::get('csrf_token');
+		$stored_time = Session::get('csrf_token_time');
+		
+		if ($max_time + $stored_time <= time() || empty($csrf_token)) {
+			Session::set('csrf_token', md5(uniqid(rand(), true)));
+			Session::set('csrf_token_time', time());
+		}
+		
+		return Session::get('csrf_token');
+	}
 
-    /**
-     * checks if CSRF token in session is same as in the form submitted
-     *
-     * @access public
-     * @static static method
-     * @return bool
-     */
-    public static function isTokenValid(): bool
-    {
-        return $_POST['csrf_token'] === Session::get('csrf_token');
-    }
+	/**
+	 * checks if CSRF token in session is same as in the form submitted
+	 *
+	 * @access public
+	 * @static static method
+	 * @return bool
+	 */
+	public static function isTokenValid() {
+		return $_POST['csrf_token'] === Session::get('csrf_token');
+	}
 }

@@ -1,107 +1,87 @@
 <?php
+
 namespace Helpers;
 
-class Datasource
-{
+class Datasource {
 
-    public $rows, $fields, $indexRows, $rowCount, $colCount;
+	public $rows, $fields, $indexRows, $rowCount, $colCount;
 
-    public $id;
+	public $id;
 
-    public function __construct($id = false)
-    {
-        if ($id)
-            $this->id = $id;
-        $this->rowCount = 0;
-        $this->colCount = 0;
-        $this->rows = [];
-        $this->fields = [];
-        
-        $sqlType = '';
-        $this->expectResult = false;
-        
-        $this->error = '';
-        $this->indexRows = true;
-    }
+	public function __construct($id = false) {
+		if ($id)
+			$this->id = $id;
+		$this->rowCount = 0;
+		$this->colCount = 0;
+		$this->rows = [ ];
+		$this->fields = [ ];
+		
+		$sqlType = '';
+		$this->expectResult = false;
+		
+		$this->error = '';
+		$this->indexRows = true;
+	}
 
-    public function reset()
-    {
-        $this->__construct(); // construct will reset.
-    }
+	public function reset() {
+		$this->__construct(); // construct will reset.
+	}
 
-    public function addRow($indexedArrayData)
-    {
-        if (is_array($indexedArrayData)) {
-            $this->rows[] = $indexedArrayData;
-        }
-    }
+	public function addRow($indexedArrayData) {
+		if (is_array($indexedArrayData)) {
+			$this->rows[] = $indexedArrayData;
+		}
+	}
 
-    public function prepare()
-    {
-        $this->rowCount = count($this->rows);
-        
-        /* if there are any rows */
-        if ($this->rowCount > 0) {
-            
-            /* know the field names from the first row */
-            $this->fields = array_keys($this->rows[0]);
-            $this->colCount = count($this->fields);
-        }
-    }
+	public function prepare() {
+		$this->rowCount = count($this->rows);
+		
+		/* if there are any rows */
+		if ($this->rowCount > 0) {
+			
+			/* know the field names from the first row */
+			$this->fields = array_keys($this->rows[0]);
+			$this->colCount = count($this->fields);
+		}
+	}
 
-    public function getSQLType($sqlQuery)
-    {
-        $sqlType = strtolower(substr($sqlQuery, 0, 10));
-        
-        if (strstr($sqlType, "show datab")) {
-            $sqlType = 'show';
-        } else 
-            if (strstr($sqlType, "select")) {
-                $sqlType = 'select';
-            } else 
-                if (strstr($sqlType, "exec")) {
-                    $sqlType = 'exec';
-                } else 
-                    if (strstr($sqlType, "insert int")) {
-                        $sqlType = 'insert';
-                    } else 
-                        if (strstr($sqlType, "update")) {
-                            $sqlType = 'update';
-                        } else 
-                            if (strstr($sqlType, "delete")) {
-                                $sqlType = 'delete';
-                            } else 
-                                if (strstr($sqlType, "create tab")) {
-                                    $sqlType = 'createTable';
-                                } else 
-                                    if (strstr($sqlType, "create dat")) {
-                                        $sqlType = 'createDatabase';
-                                    } else 
-                                        if (strstr($sqlType, "create ind")) {
-                                            $sqlType = 'createIndex';
-                                        } else 
-                                            if (strstr($sqlType, "create vie")) {
-                                                $sqlType = 'createView';
-                                            } else 
-                                                if (strstr($sqlType, "create use")) {
-                                                    $sqlType = 'createUser';
-                                                } else 
-                                                    if (strstr($sqlType, "drop table")) {
-                                                        $sqlType = 'dropTable';
-                                                    } else 
-                                                        if (strstr($sqlType, "drop datab")) {
-                                                            $sqlType = 'dropDatabase';
-                                                        } else 
-                                                            if (strstr($sqlType, "drop index")) {
-                                                                $sqlType = 'dropIndex';
-                                                            } else 
-                                                                if (strstr($sqlType, "truncate")) {
-                                                                    $sqlType = 'truncate';
-                                                                } else 
-                                                                    if (strstr($sqlType, "alter")) {
-                                                                        $sqlType = 'alter';
-                                                                    }
-        
-        return $sqlType;
-    }
+	public function getSQLType($sqlQuery) {
+		$sqlType = strtolower(substr($sqlQuery, 0, 10));
+		
+		if (strstr($sqlType, "show datab")) {
+			$sqlType = 'show';
+		} else if (strstr($sqlType, "select")) {
+			$sqlType = 'select';
+		} else if (strstr($sqlType, "exec")) {
+			$sqlType = 'exec';
+		} else if (strstr($sqlType, "insert int")) {
+			$sqlType = 'insert';
+		} else if (strstr($sqlType, "update")) {
+			$sqlType = 'update';
+		} else if (strstr($sqlType, "delete")) {
+			$sqlType = 'delete';
+		} else if (strstr($sqlType, "create tab")) {
+			$sqlType = 'createTable';
+		} else if (strstr($sqlType, "create dat")) {
+			$sqlType = 'createDatabase';
+		} else if (strstr($sqlType, "create ind")) {
+			$sqlType = 'createIndex';
+		} else if (strstr($sqlType, "create vie")) {
+			$sqlType = 'createView';
+		} else if (strstr($sqlType, "create use")) {
+			$sqlType = 'createUser';
+		} else if (strstr($sqlType, "drop table")) {
+			$sqlType = 'dropTable';
+		} else if (strstr($sqlType, "drop datab")) {
+			$sqlType = 'dropDatabase';
+		} else if (strstr($sqlType, "drop index")) {
+			$sqlType = 'dropIndex';
+		} else if (strstr($sqlType, "truncate")) {
+			$sqlType = 'truncate';
+		} else if (strstr($sqlType, "alter")) {
+			$sqlType = 'alter';
+		}
+		
+		return $sqlType;
+	}
 }

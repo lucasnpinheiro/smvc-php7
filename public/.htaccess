@@ -3,7 +3,7 @@ Options -Indexes
 <IfModule mod_rewrite.c>
 
 	RewriteEngine On
-	RewriteBase /smvc-php7/public/
+	RewriteBase /smvc/
 
 	# Force to exclude the trailing slash
 	RewriteCond %{REQUEST_FILENAME} !-d

@@ -1,54 +1,48 @@
 <?php
+
 namespace Helpers;
 
-class BootstrapUI
-{
+class BootstrapUI {
 
-    public static function alertBox($message)
-    {
-        if ($message == '')
-            return;
-        return ' <div class="alert alert-danger"><p><i class="fa fa-exclamation-triangle"></i> ' . $message . '  </p></div>';
-    }
+	public static function alertBox($message) {
+		if ($message == '')
+			return;
+		return ' <div class="alert alert-danger"><p><i class="fa fa-exclamation-triangle"></i> ' . $message . '  </p></div>';
+	}
 
-    public static function dangerCallout($message = null)
-    {
-        if ($message == '')
-            return;
-        return ' <div class="alert alert-danger"><p>' . $message . '</p></div>';
-    }
+	public static function dangerCallout($message = null) {
+		if ($message == '')
+			return;
+		return ' <div class="alert alert-danger"><p>' . $message . '</p></div>';
+	}
 
-    public static function infoCallout($message = null)
-    {
-        if ($message == '')
-            return;
-        return ' <div class="alert alert-info"><p>' . $message . '</p></div>';
-    }
+	public static function infoCallout($message = null) {
+		if ($message == '')
+			return;
+		return ' <div class="alert alert-info"><p>' . $message . '</p></div>';
+	}
 
-    public static function warningCallout($message = null)
-    {
-        if ($message == '')
-            return;
-        return ' <div class="alert alert-warning"><p>' . $message . '</p></div>';
-    }
+	public static function warningCallout($message = null) {
+		if ($message == '')
+			return;
+		return ' <div class="alert alert-warning"><p>' . $message . '</p></div>';
+	}
 
-    public static function validationSummary($validatorObject)
-    {
-        if (! is_object($validatorObject))
-            return;
-        
-        if ($validatorObject->hasErrors()) {
-            $validationErrors = $validatorObject->getAllErrors();
-            
-            return ' <div class="alert alert-danger"><p style="text-align:left"> &bull; &nbsp; ' . implode('<br /> &bull; &nbsp; ', $validationErrors) . '</p></div>';
-        }
-    }
-    
-    // ckeditor
-    public static function ckeditorBasic($formElementName, $editorHeight = '200', $projectGUID = null)
-    {
-        // http://ckeditor.com/latest/samples/plugins/toolbar/toolbar.html
-        return "<script>
+	public static function validationSummary($validatorObject) {
+		if (! is_object($validatorObject))
+			return;
+		
+		if ($validatorObject->hasErrors()) {
+			$validationErrors = $validatorObject->getAllErrors();
+			
+			return ' <div class="alert alert-danger"><p style="text-align:left"> &bull; &nbsp; ' . implode('<br /> &bull; &nbsp; ', $validationErrors) . '</p></div>';
+		}
+	}
+	
+	// ckeditor
+	public static function ckeditorBasic($formElementName, $editorHeight = '200', $projectGUID = null) {
+		// http://ckeditor.com/latest/samples/plugins/toolbar/toolbar.html
+		return "<script>
 		CKEDITOR.replace( \"" . $formElementName . "\" , {
                     height:" . $editorHeight . ",
                         
@@ -70,12 +64,11 @@ class BootstrapUI
                         filebrowserImageUploadUrl : '" . BASE_URL . "/assets/kcfinder/upload.php?opener=ckeditor&type=images&project=" . $projectGUID . "',
                  } );
 	</script>";
-    }
+	}
 
-    public static function ckeditorSimple($formElementName, $imagesBrowserPath = null, $imagesUploadPath = null, $editorHeight = '200')
-    {
-        // http://ckeditor.com/latest/samples/plugins/toolbar/toolbar.html
-        return "<script>
+	public static function ckeditorSimple($formElementName, $imagesBrowserPath = null, $imagesUploadPath = null, $editorHeight = '200') {
+		// http://ckeditor.com/latest/samples/plugins/toolbar/toolbar.html
+		return "<script>
 		CKEDITOR.replace( \"" . $formElementName . "\" , {
                     height:" . $editorHeight . ",
 
@@ -92,73 +85,76 @@ class BootstrapUI
 			// Remove the redundant buttons from toolbar groups defined above.
 			removeButtons: 'Subscript,Superscript,Anchor,Specialchar'," . ($imagesBrowserPath != '' ? "filebrowserImageBrowseUrl : '" . $imagesBrowserPath . "'," . "\n" : "") . ($imagesUploadPath != '' ? "filebrowserImageUploadUrl : '" . $imagesUploadPath . "'," . "\n" : "") . " } );
 	</script>";
-    }
+	}
 
-    public static function formTextbox($labelText, $fieldName, $defaultValue = '', $placeholderValue = '')
-    {
-        if ($labelText == null) {
-            $string = '<div class="form-group row">
+	public static function formTextbox($labelText, $fieldName, $defaultValue = '', $placeholderValue = '') {
+		if ($labelText == null) {
+			$string = '<div class="form-group row">
                    <p class="col-md-12">
                         <input type="text" class="form-control" placeholder="' . $placeholderValue . '" id="' . $fieldName . '" name="' . $fieldName . '" value="' . $defaultValue . '" /></p>
                 </div>';
-        } else {
-            $string = '<div class="form-group row">
+		} else {
+			$string = '<div class="form-group row">
                     <p class="col-md-3"><label for="' . $fieldName . '">' . $labelText . '</label></p>
                     <p class="col-md-8">
                         <input type="text" class="form-control" placeholder="' . $placeholderValue . '" id="' . $fieldName . '" name="' . $fieldName . '" value="' . $defaultValue . '" /></p>
                 </div>';
-        }
-        return $string;
-    }
+		}
+		return $string;
+	}
 
-    public static function formSelect($labelText, $fieldName, $keyIndexedValuesArray = '', $selectedValue = '')
-    {
-        if ($labelText != '')
-            $string = '<div class="form-group row">
+	public static function formSelect($labelText, $fieldName, $keyIndexedValuesArray = '', $selectedKey = null) {
+		if ($labelText != '')
+			$string = '<div class="form-group row">
                     <div class="col-md-3"><label for="' . $fieldName . '">' . $labelText . '</label></div>
                     <div class="col-md-8">';
-        else
-            $string = '<div class="form-group">';
-        
-        $string .= ' <select class="form-control" id="' . $fieldName . '" name="' . $fieldName . '">';
-        
-        foreach ($keyIndexedValuesArray as $key => $value) {
-            if (is_array($value)) {
-                $string .= '<optgroup label="' . $key . '">' . "\n";
-                foreach ($value as $optionKey => $optionValue) {
-                    $string .= '<option value="' . $optionKey . '">' . $optionKey . '</option>' . "\n";
-                }
-                $string .= '</optgroup>' . "\n";
-            } else {
-                $string .= '<option value="' . $key . '">' . $value . '</option>' . "\n";
-            }
-        }
-        $string .= '</select>';
-        $string .= ($labelText != '' ? '</div>' : '') . '</div>';
-        return $string;
-    }
+		else
+			$string = '<div class="form-group">';
+		
+		$string .= ' <select class="form-control" id="' . $fieldName . '" name="' . $fieldName . '">';
+		if (is_array($keyIndexedValuesArray)) {
+			foreach ($keyIndexedValuesArray as $key => $value) {
+				
+				$selected = null;
+				if ($selectedKey === $key)
+					$selected = ' selected';
+				
+				if (is_array($value)) {
+					$string .= '<optgroup label="' . $key . '">' . "\n";
+					foreach ($value as $optionKey => $optionValue) {
+						
+						$string .= '<option value="' . $optionKey . $selected . '">' . $optionKey . '</option>' . "\n";
+					}
+					$string .= '</optgroup>' . "\n";
+				} else {
+					$string .= '<option value="' . $key . $selected . '">' . $value . '</option>' . "\n";
+				}
+			}
+		}
+		$string .= '</select>';
+		$string .= ($labelText != '' ? '</div>' : '') . '</div>';
+		return $string;
+	}
 
-    public static function formTextarea($labelText, $fieldName, $defaultValue = '', $placeholderValue = '', $rows = 3)
-    {
-        if ($labelText != '') {
-            $string = '<div class="form-group row">
+	public static function formTextarea($labelText, $fieldName, $defaultValue = '', $placeholderValue = '', $rows = 3) {
+		if ($labelText != '') {
+			$string = '<div class="form-group row">
                         <div class="col-md-3"><label for="' . $fieldName . '">' . $labelText . '</label></div>
                         <div class="col-md-8">
                             <textarea class="form-control" rows="' . $rows . '" id="' . $fieldName . '" name="' . $fieldName . '" placeholder="' . $placeholderValue . '">' . $defaultValue . '</textarea></div>
                     </div>';
-        } else {
-            $string = '<div class="form-group row">
+		} else {
+			$string = '<div class="form-group row">
                        <div class="col-md-12">
                             <textarea class="form-control" rows="' . $rows . '" id="' . $fieldName . '" name="' . $fieldName . '" placeholder="' . $placeholderValue . '">' . $defaultValue . '</textarea></div>
                     </div>';
-        }
-        return $string;
-    }
+		}
+		return $string;
+	}
 
-    public static function formDateTextbox($labelText, $fieldName, $defaultValue = '')
-    {
-        if ($labelText != '')
-            $string = '<div class="form-group row">
+	public static function formDateTextbox($labelText, $fieldName, $defaultValue = '') {
+		if ($labelText != '')
+			$string = '<div class="form-group row">
                 <div class="col-md-3 col-sm-3"><label for="' . $fieldName . '">' . $labelText . '</label></div>
                 <div class="col-md-8">
                     <div class="input-group ">
@@ -169,26 +165,25 @@ class BootstrapUI
                     </div>
                 </div>
             </div>';
-        else
-            $string = '<div class="input-group">
+		else
+			$string = '<div class="input-group">
                         <div class="input-group-addon">
                             <i class="fa fa-calendar"></i>
                         </div>
                         <input type="text" class="form-control" id="' . $fieldName . '" name="' . $fieldName . '" value="' . $defaultValue . '" placeholder="dd-MMM-yyyy">
                     </div>';
-        return $string;
-    }
+		return $string;
+	}
 
-    public static function formTimeTextbox($labelText = '', $fieldName = '', $defaultValue = '')
-    {
-        if ($labelText != '') {
-            $string = '<div class="form-group row">
+	public static function formTimeTextbox($labelText = '', $fieldName = '', $defaultValue = '') {
+		if ($labelText != '') {
+			$string = '<div class="form-group row">
                     <p class="col-md-3"><label for="' . $fieldName . '">' . $labelText . '</label></p>
                     <p class="col-md-8">
                         <input type="text" class="form-control" placeholder="09:30 AM" id="' . $fieldName . '" name="' . $fieldName . '" value="' . $defaultValue . '" /></p>
                 </div>';
-        } else {
-            $string = '<div class="form-group">
+		} else {
+			$string = '<div class="form-group">
                     <div class="input-group bootstrap-timepicker timepicker">
                         <input type="text" class="form-control" id="' . $fieldName . '" name="' . $fieldName . '" value="' . $defaultValue . '" placeholder="hh:mm" >
                         <span class="input-group-addon">
@@ -196,17 +191,35 @@ class BootstrapUI
                         </span>
                     </div>
                 </div>';
-        }
-        return $string;
-    }
+		}
+		return $string;
+	}
 
-    public static function formSubmit($textOnButton, $fieldName)
-    {
-        $string = '<div class="form-group row">
-                    <div class="col-md-3"> </div>
-                    <div class="col-md-8">
-                        <input type="submit" class="form-control" id="' . $fieldName . '" name="' . $fieldName . '" value="' . $textOnButton . '" /></div>
+	public static function formHidden($fieldName, $value) {
+		return '<input type="hidden" name="' . $fieldName . '" id="' . $fieldName . '" value="' . $value . '" />' . "\n";
+	}
+
+	public static function formSubmit($textOnButton, $fieldName) {
+		$string = '<div class="form-group row">
+                    <div class="col-sm-2 col-md-offset-3">
+                        <input type="submit" class="form-control btn-success" id="' . $fieldName . '" name="' . $fieldName . '" value="' . $textOnButton . '" /></div>
                 </div>';
-        return $string;
-    }
+		return $string;
+	}
+
+	public static function jQueryDatatable($tableIDsArray, int $columnNumberToSort = 1) {
+		if (is_array($tableIDsArray)) {
+			$string = '<link rel="stylesheet" type="text/css" href="' . DIR . '/plugins/datatables/dataTables.bootstrap.css"> 
+                    <script type="text/javascript" charset="utf8" src="' . DIR . '/plugins/datatables/jquery.dataTables.min.js"></script>
+                <script type="text/javascript" charset="utf8" src="' . DIR . '/plugins/datatables/dataTables.bootstrap.min.js"></script>
+            <script>
+                $(function(){ ';
+			foreach ($tableIDsArray as $tableID) {
+				$string .= '$("#' . $tableID . '").dataTable({ "iDisplayLength": 100, "order": [[ ' . $columnNumberToSort . ', "asc" ]]});' . "\n";
+			}
+			
+			$string .= '}); </script>' . "\n";
+		}
+		return $string;
+	}
 }

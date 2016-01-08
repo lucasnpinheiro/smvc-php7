@@ -4,10 +4,7 @@
  */
 use Helpers\Assets;
 use Helpers\Url;
-use Helpers\Hooks;
 
-// initialise hooks
-$hooks = Hooks::get();
 ?>
 <!DOCTYPE html>
 <html lang="<?php echo LANGUAGE_CODE; ?>">
@@ -15,28 +12,15 @@ $hooks = Hooks::get();
 
 <!-- Site meta -->
 <meta charset="utf-8">
-	<?php
-// hook for plugging in meta tags
-$hooks->run('meta');
-?>
-	<title><?php echo $data['title'].' - '.SITE_TITLE; //SITE_TITLE defined in app/config.php ?></title>
+<title><?php echo $data['title'].' - '.SITE_TITLE; //SITE_TITLE defined in app/config.php ?></title>
 
 <!-- CSS -->
 	<?php
-echo Assets::css(array(
-    '//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css',
-    Url::getTemplateAssetsPath() . 'css/style.css'
-));
-
-// hook for plugging in css
-$hooks->run('css');
-?>
+	echo Assets::css(array ('//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css',Url::getTemplateAssetsPath() . 'css/style.css'));
+	
+	?>
 
 </head>
 <body>
-<?php
-// hook for running code after body tag
-$hooks->run('afterBody');
-?>
 
-<div class="container">
+	<div class="container">
